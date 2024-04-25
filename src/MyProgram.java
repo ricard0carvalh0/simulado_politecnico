@@ -157,5 +157,8 @@ public class MyProgram {
 
         System.out.println();
         aluno.imprimirHistorico();
+
+        aluno.estaIntegralizado();
+        aluno.getDisciplinasFaltantes();
     }
 }

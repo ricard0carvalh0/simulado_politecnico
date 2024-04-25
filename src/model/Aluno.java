@@ -60,4 +60,43 @@ public class Aluno extends Pessoa{
             System.out.println("___________________________________________");
         }
     }
+
+    public boolean estaIntegralizado() {
+        if(this.grade.getDisciplinas().size() > this.historico.size()) {
+            return false;
+        }
+        int contador = 0;
+        for(int i=0; i<this.historico.size(); i++) {
+            Apontamento apontamento = this.historico.get(i);
+            for(int j=0; j<this.grade.getDisciplinas().size(); j++) {
+                Disciplina disciplina = this.grade.getDisciplinas().get(j);
+                if(disciplina.getNome().equalsIgnoreCase(apontamento.getDisciplina().getNome())) {
+                    contador++;
+                }
+            }
+        }
+        if(contador >= this.grade.getDisciplinas().size()) {
+            return true;
+        }
+        return false;
+    }
+
+    public ArrayList<Disciplina> getDisciplinasFaltantes() {
+        ArrayList<Disciplina> disciplinasFaltantes = new ArrayList<Disciplina>();
+        for(int i=0; i<this.grade.getDisciplinas().size(); i++) {
+            Disciplina disciplina = this.grade.getDisciplinas().get(i);
+            boolean cursou = false;
+            for(int j=0; j<this.historico.size(); j++) {
+                Apontamento apontamento = this.historico.get(j);
+                if(apontamento.getDisciplina().getNome().equalsIgnoreCase(disciplina.getNome())) {
+                    cursou = true;
+                    break;
+                }
+            }
+            if(!cursou) {
+                disciplinasFaltantes.add(disciplina);
+            }
+        }
+        return disciplinasFaltantes;
+    }
 }
